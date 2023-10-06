@@ -7,8 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="seat")
-@Data  @NoArgsConstructor @AllArgsConstructor
+@Table(name = "seat")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Seat {
 
     @Id
@@ -22,7 +24,7 @@ public class Seat {
     @Column(name = "seat_row")
     private int seatRow;
 
-    @Column(name = "airplane_id", insertable=false, updatable=false)
+    @Column(name = "airplane_id", insertable = false, updatable = false)
     private int planeId;
 
     @JsonIgnore
@@ -33,8 +35,7 @@ public class Seat {
     @JsonIgnore//campo deberia ser ignorado durante el ´proceso de serialiacion
     @ManyToOne
     @JoinColumn(name = "airplane_id")
-    private  Airplane airplane;
-
+    private Airplane airplane;
 
 
 }

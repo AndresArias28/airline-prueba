@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name="seat_type")
+@Table(name = "seat_type")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,7 +22,7 @@ public class SeatType {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy =  "seatType")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "seatType")
     private List<Seat> seats;
 
 }
