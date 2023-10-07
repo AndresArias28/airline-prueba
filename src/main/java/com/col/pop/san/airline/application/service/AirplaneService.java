@@ -12,4 +12,6 @@ public interface AirplaneService {
     List<Flight> findFlight();
 
     Airplane findAirplaneFetch(Integer AirplaneId);
+
+    List<Flight>  getFlights(String Air);
 }

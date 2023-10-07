@@ -11,5 +11,8 @@ public interface AirplaneDAO {
 
     List<Flight> getFlights();
 
+
     Airplane findAirplaneAndFlightsByAirplaneId(Integer Id);
+
+    List<Flight> getFlightsByAirport(String airport);
 }

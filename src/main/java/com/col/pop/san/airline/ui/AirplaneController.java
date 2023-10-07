@@ -34,4 +34,9 @@ public class AirplaneController {
 
         return airplaneService.findAirplaneFetch(id);
     }
+
+    @GetMapping("/airplane/{airport}")
+    public List<Flight> getFlights(@PathVariable String airport) {
+        return  airplaneService.getFlights(airport);
+    }
 }

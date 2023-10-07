@@ -32,4 +32,9 @@ public class AirplaneServiceImpl implements AirplaneService {
     public Airplane findAirplaneFetch(Integer AirplaneId) {
         return airplaneDAO.findAirplaneAndFlightsByAirplaneId(AirplaneId);
     }
+
+    @Override
+    public List<Flight> getFlights(String id) {
+        return airplaneDAO.getFlightsByAirport(id);
+    }
 }

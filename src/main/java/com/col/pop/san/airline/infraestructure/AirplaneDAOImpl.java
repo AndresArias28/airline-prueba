@@ -3,6 +3,7 @@ package com.col.pop.san.airline.infraestructure;
 import com.col.pop.san.airline.domain.entity.Airplane;
 import com.col.pop.san.airline.domain.entity.Flight;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,6 +20,7 @@ public class AirplaneDAOImpl implements AirplaneDAO {
         this.entityManager = entityManager;
     }
 
+
     @Override
     public List<Flight> getFlights() {
         TypedQuery<Flight> query = entityManager
@@ -26,6 +28,13 @@ public class AirplaneDAOImpl implements AirplaneDAO {
         return query.getResultList();
     }
 
+    @Override
+    public List<Flight> getFlightsByAirport(String takeoffAirport) {
+        TypedQuery<Flight> query = entityManager
+                .createQuery("SELECT f FROM Flight f WHERE f.takeoffAirport LIKE :data", Flight.class);
+        query.setParameter("data", takeoffAirport);
+        return query.getResultList();
+    }
 
     @Override
     public List<Airplane> getAirplanes() {
