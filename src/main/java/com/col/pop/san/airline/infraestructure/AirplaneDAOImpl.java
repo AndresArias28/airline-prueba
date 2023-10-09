@@ -2,6 +2,7 @@ package com.col.pop.san.airline.infraestructure;
 
 import com.col.pop.san.airline.domain.entity.Airplane;
 import com.col.pop.san.airline.domain.entity.Flight;
+import com.col.pop.san.airline.domain.entity.Passenger;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.TypedQuery;
@@ -34,6 +35,14 @@ public class AirplaneDAOImpl implements AirplaneDAO {
                 .createQuery("SELECT f FROM Flight f WHERE f.takeoffAirport LIKE :data", Flight.class);
         query.setParameter("data", takeoffAirport);
         return query.getResultList();
+    }
+
+    @Override
+    public List<Passenger> getPassengerByName(String name) {
+        TypedQuery<Passenger> getPassengersQuery = entityManager
+                .createQuery("SELECT p FROM Passenger p WHERE p.name LIKE :data", Passenger.class);
+         getPassengersQuery.setParameter("data", name);
+         return getPassengersQuery.getResultList();
     }
 
     @Override

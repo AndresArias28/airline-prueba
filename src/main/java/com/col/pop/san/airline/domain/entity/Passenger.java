@@ -5,9 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor @AllArgsConstructor
 @Entity
+@Table(name = "passenger")
 public class Passenger {
 
     @Id
@@ -17,10 +20,16 @@ public class Passenger {
 
     @Column(name = "dni")
     private String dni;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "age")
     private Integer age;
+
     @Column(name = "country")
     private  String country;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "passenger")
+    private List<BoardingPass> boardingsPass;
 }

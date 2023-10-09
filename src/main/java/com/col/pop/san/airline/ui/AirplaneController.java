@@ -3,6 +3,7 @@ package com.col.pop.san.airline.ui;
 import com.col.pop.san.airline.application.service.AirplaneService;
 import com.col.pop.san.airline.domain.entity.Airplane;
 import com.col.pop.san.airline.domain.entity.Flight;
+import com.col.pop.san.airline.domain.entity.Passenger;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +24,6 @@ public class AirplaneController {
     @GetMapping("/")
     public List<Airplane> getAirplain() {
         return airplaneService.findAll();
-
     }
 
     @GetMapping("/migration")
@@ -33,7 +33,6 @@ public class AirplaneController {
 
     @GetMapping("/migrationFetch/{id}")
     public Airplane getAirplaneUsingFetchById(@PathVariable Integer id) {
-
         return airplaneService.findAirplaneFetch(id);
     }
 
@@ -42,5 +41,8 @@ public class AirplaneController {
         return  airplaneService.getFlights(airport);
     }
 
-    //@GetMapping("/airplane/")
+    @GetMapping("/passenger/{name}")
+    public List<Passenger> getPassenger(@PathVariable String name) {
+        return airplaneService.getPassenger(name);
+    }
 }
