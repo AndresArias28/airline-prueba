@@ -28,5 +28,20 @@ public class BoardingPass {
     @JoinColumn(name = "purchase_id")
     private Purchase purchase;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "flight_id")
+    private Flight flight;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "seat_type_id")
+    private SeatType seatType;
+
 
 }

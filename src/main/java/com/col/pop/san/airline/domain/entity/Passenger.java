@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -31,5 +32,13 @@ public class Passenger {
     private  String country;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "passenger")
-    private List<BoardingPass> boardingsPass;
+    private List<BoardingPass> boardingsPasses;
+
+    public void add(BoardingPass boardingPassTemp) {
+        if (boardingsPasses == null) {
+            boardingsPasses = new ArrayList<>();
+        }
+        boardingsPasses.add(boardingPassTemp);
+        boardingPassTemp.setPassenger(this);
+    }
 }

@@ -1,10 +1,10 @@
 package com.col.pop.san.airline.infraestructure;
 
 import com.col.pop.san.airline.domain.entity.Airplane;
+import com.col.pop.san.airline.domain.entity.BoardingPass;
 import com.col.pop.san.airline.domain.entity.Flight;
 import com.col.pop.san.airline.domain.entity.Passenger;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NamedQuery;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,12 +12,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class AirplaneDAOImpl implements AirplaneDAO {
+public class AirlineDAOImpl implements AirlineDAO {
 
     private final EntityManager entityManager;
 
     @Autowired
-    public AirplaneDAOImpl(EntityManager entityManager) {
+    public AirlineDAOImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
@@ -43,6 +43,14 @@ public class AirplaneDAOImpl implements AirplaneDAO {
                 .createQuery("SELECT p FROM Passenger p WHERE p.name LIKE :data", Passenger.class);
          getPassengersQuery.setParameter("data", name);
          return getPassengersQuery.getResultList();
+    }
+
+    @Override
+    public List<BoardingPass> getBoardingPassById(Integer id) {
+        TypedQuery<BoardingPass> queryGetBoarding = entityManager
+                .createQuery("SELECT b FROM BoardingPass b WHERE b.id = :data", BoardingPass.class);
+        queryGetBoarding.setParameter("data", id);
+        return queryGetBoarding.getResultList();
     }
 
     @Override

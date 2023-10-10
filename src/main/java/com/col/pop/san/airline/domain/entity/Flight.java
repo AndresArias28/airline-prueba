@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "flight")
 @Data
@@ -33,4 +35,7 @@ public class Flight {
     @ManyToOne
     @JoinColumn(name = "airplane_id")
     private Airplane airplane;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "flight")
+    private List<BoardingPass> BoardingPasses;
 }

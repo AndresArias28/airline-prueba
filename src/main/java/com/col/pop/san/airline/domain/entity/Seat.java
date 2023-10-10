@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "seat")
 @Data
@@ -16,16 +18,13 @@ public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seat_id")
-    private Integer id;
+    private Integer seatId;
 
     @Column(name = "seat_column")
     private String seatColumn;
 
     @Column(name = "seat_row")
     private int seatRow;
-
-    @Column(name = "airplane_id", insertable = false, updatable = false)
-    private int planeId;
 
     @JsonIgnore
     @ManyToOne
@@ -36,6 +35,10 @@ public class Seat {
     @ManyToOne
     @JoinColumn(name = "airplane_id")
     private Airplane airplane;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "seat")
+    private List<BoardingPass> BoardingPasses;
+
 
 
 }

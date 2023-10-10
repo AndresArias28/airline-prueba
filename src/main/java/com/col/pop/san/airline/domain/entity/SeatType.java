@@ -25,4 +25,8 @@ public class SeatType {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "seatType")
     private List<Seat> seats;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "seatType")
+    private List<BoardingPass> BoardingPasses;
+
+
 }
