@@ -17,7 +17,7 @@ public class Flight {
     @Id
     @Column(name = "flight_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer flightId;
 
     @Column(name = "takeoff_date_time")
     private  Integer takeoffDateTime;
@@ -36,6 +36,6 @@ public class Flight {
     @JoinColumn(name = "airplane_id")
     private Airplane airplane;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "flight")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "flight")
     private List<BoardingPass> BoardingPasses;
 }

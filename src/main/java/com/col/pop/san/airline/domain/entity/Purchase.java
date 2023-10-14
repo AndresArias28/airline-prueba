@@ -17,7 +17,7 @@ public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "purchase_id")
-    private Integer id;
+    private Integer purchaseId;
 
     @Column(name = "purchase_date")
     private Integer purchaseDate;

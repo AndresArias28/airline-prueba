@@ -40,6 +40,5 @@ public class Seat {
     private List<BoardingPass> BoardingPasses;
 
 
-
 }
 

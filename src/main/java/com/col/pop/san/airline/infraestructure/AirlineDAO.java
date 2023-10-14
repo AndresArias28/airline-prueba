@@ -1,11 +1,9 @@
 package com.col.pop.san.airline.infraestructure;
 
-import com.col.pop.san.airline.domain.entity.Airplane;
-import com.col.pop.san.airline.domain.entity.BoardingPass;
-import com.col.pop.san.airline.domain.entity.Flight;
-import com.col.pop.san.airline.domain.entity.Passenger;
+import com.col.pop.san.airline.domain.entity.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AirlineDAO {
 
@@ -18,7 +16,19 @@ public interface AirlineDAO {
 
     List<Flight> getFlightsByAirport(String airport);
 
-    List<Passenger> getPassengerByName(String name);
+   // List<Passenger> getPassengerByName(String name);
 
-    List<BoardingPass> getBoardingPassById(Integer id);
+    List<BoardingPass> getBoardingPassById();
+
+    List<Flight> getFlightsUsingFetchBy(Integer id);
+
+    List<Seat> getSeats();
+
+    List<Map<String, Object>> obtenerDatosTransformados(Integer id);
+
+    List<Passenger> getPassengerList();
+
+    List<Passenger> getPassengersByflightId(Integer id);
+
+    // List<Passenger> getPassengerNative(Integer id);
 }
