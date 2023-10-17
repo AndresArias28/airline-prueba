@@ -1,6 +1,5 @@
 package com.col.pop.san.airline.domain.entity;
 
-import com.col.pop.san.airline.infraestructure.PassengerRepository;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,9 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "passenger")
+/*
 @NamedQuery(
         name = "find_passengerRepo",
         query =
@@ -40,7 +41,7 @@ import java.util.List;
                         @ColumnResult(name = "passengerId", type = Integer.class)
                 }
         )
-)
+)*/
 public class Passenger {
 
     @Id
@@ -70,6 +71,4 @@ public class Passenger {
         boardingsPasses.add(boardingPassTemp);
         boardingPassTemp.setPassenger(this);
     }
-
-
 }

@@ -43,13 +43,4 @@ public class BoardingPass {
     @JoinColumn(name = "seat_type_id")
     private SeatType seatType;
 
-    @Override
-    public String toString() {
-        return  "boardingPassId=" + boardingPassId +
-                ", passenger=" + passenger +
-                ", purchase=" + purchase +
-                ", flight=" + flight +
-                ", seat=" + seat +
-                ", seatType=" + seatType;
-    }
-}
+  }

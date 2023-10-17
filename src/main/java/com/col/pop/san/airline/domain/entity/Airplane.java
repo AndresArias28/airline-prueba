@@ -19,12 +19,13 @@ public class Airplane {
 
     @Column(name = "name")
     private String name;
-    //enlazando Seat  y Airplane
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airplane")//este nombre es el atributo que enlaza desde la entidad Seat
     private List<Seat> seats;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airplane")
     private List<Flight> flights;
+
     //ESTA CLASE PERMITE BIDIRECCIONALIDAD ENTRE TABLAS
     public void add(Seat tempSeat) {
         if (seats == null) {

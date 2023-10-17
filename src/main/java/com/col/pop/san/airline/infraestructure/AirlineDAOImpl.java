@@ -1,6 +1,8 @@
 package com.col.pop.san.airline.infraestructure;
 
 import com.col.pop.san.airline.domain.entity.*;
+import com.col.pop.san.airline.domain.entity.response.PassengerResponse;
+import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
@@ -69,7 +71,6 @@ public class AirlineDAOImpl implements AirlineDAO {
     }
 
 
-
     @Override
     public List<Airplane> getAirplanes() {
         TypedQuery<Airplane> query = entityManager
@@ -87,7 +88,6 @@ public class AirlineDAOImpl implements AirlineDAO {
 
     @Override
     public List<Passenger> getPassengersByflightId(Integer id) {
-
         TypedQuery<Passenger> getPassengersQuery = entityManager
                 .createQuery("SELECT p FROM Passenger p JOIN FETCH BoardingPass bp ON p.passengerId = bp.passenger.passengerId "
                         +"JOIN FETCH Flight f ON bp.flight.flightId = f.flightId "
@@ -97,41 +97,78 @@ public class AirlineDAOImpl implements AirlineDAO {
 
     }
 
-
-    public Object getPassengers(Integer id) {
-        Query query =  entityManager
-                .createQuery("SELECT p.passengerId, p.dni, bp.boardingPassId FROM Passenger p "+
-                                "JOIN FETCH BoardingPass bp " +
-                                "ON  p.passengerId = bp.passenger.passengerId ");
-       // query.setParameter("data", id);
-        return query.getResultList();
-    }
     @Override
-    public List<Map<String, Object>> obtenerDatosTransformados(Integer id) {//preguna
-        List<Object> resultadosBD = (List<Object>) getPassengers(id);// toca manejar todo con objetos
-        //List<RespuestaPrueba> listaObjetosMapeados = new ArrayList<RespuestaPrueba>();
-        List<Map<String, Object>> resultadosTransformados = new ArrayList<>();
+    public List<PassengerResponse> getPassengersClassResponseByFlightId(Integer id) {
+        List<Object[]> resultadosBD = getPassengersClassByflightId(id);
+        List<PassengerResponse> listaResultados = new ArrayList<PassengerResponse>();
 
-        for (Object resultado : resultadosBD) {
-            Object[] fila = (Object[]) resultado;
-           // RespuestaPrueba respuestaPrueba = new RespuestaPrueba();
+        for (Object[] filaObjetos : resultadosBD) {
+            PassengerResponse passengerResponse = new PassengerResponse();
+            passengerResponse.setPassengerId((Integer) filaObjetos[0]);
+            passengerResponse.setDni((String) filaObjetos[1]);
+            passengerResponse.setName((String) filaObjetos[2]);
+            passengerResponse.setAge((Integer) filaObjetos[3]);
+            passengerResponse.setCountry((String) filaObjetos[4]);
+            passengerResponse.setBoardingPassId((Integer) filaObjetos[5]);
+            passengerResponse.setPurchaseId((Integer) filaObjetos[6]);
+            passengerResponse.setSeatTypeId((Integer) filaObjetos[7]);
 
-          Map<String, Object> resultadoTransformado = new HashMap<>();
-           resultadoTransformado.put("passengerID", fila[0]);
-            resultadoTransformado.put("dni", fila[1]);
-            resultadoTransformado.put("boardingPass", fila[2]);
-           /*    respuestaPrueba.setPassengerID((Integer) fila[0]);
-            respuestaPrueba.setDni((String) fila   [1]);
-            respuestaPrueba.setBoardingPass((Integer) fila[2]);*/
-
-            resultadosTransformados.add(resultadoTransformado);
+            listaResultados.add(passengerResponse);
         }
 
+        return listaResultados;
+    }
+
+    @Override
+    public List<RespuestaPrueba> get3atributes() {
+        List<Object[]> resultadosBD = (List<Object[]>) getPassengers();
+        List<RespuestaPrueba> resultadosTransformados = new ArrayList<>();
+
+        for (Object[] fila : resultadosBD) {
+            RespuestaPrueba respuesta = new RespuestaPrueba();
+            respuesta.setPassengerID((Integer) fila[0]);
+            respuesta.setDni((String) fila[1]);
+            respuesta.setBoardingPass((Integer) fila[2]);
+            resultadosTransformados.add(respuesta);
+        }
         return resultadosTransformados;
     }
 
+    private List<Object[]> getPassengersClassByflightId(Integer id) {
+        Query query = entityManager.createQuery(
+             "SELECT p.passengerId, p.dni, p.name, p.age, p.country, bp.boardingPassId, pu.purchaseId, s.seatTypeId " +
+                "FROM Passenger p "+
+                     "JOIN FETCH BoardingPass bp ON p.passengerId = bp.passenger.passengerId " +
+                     "JOIN FETCH SeatType s ON s.seatTypeId = bp.seatType.seatTypeId " +
+                     "JOIN FETCH Purchase pu ON pu.purchaseId = bp.purchase.purchaseId " +
+                     "JOIN FETCH Flight f ON bp.flight.flightId = f.flightId " +
+                     "WHERE f.flightId  = :data", Passenger.class
+        );
+        query.setParameter("data", id);
+        final List<Object[]> resultList = query.getResultList();
+        return resultList;
+    }
 
-
-    //SELECT p.passenger_id AS passengerId, p.dni, p.name, p.age, p.country, bp.boarding_pass_id AS boardingPassId, bp.purchase_id AS purchaseId, bp.seat_type_id AS seatTypeId, bp.seat_id AS seatId FROM Passenger p INNER JOIN BoardingPass bp ON p.passenger_id = bp.passenger_id INNER JOIN Flight f ON bp.flight_id = f.flight_id WHERE f.flight_id = :flightId")
-
+    public Object getPassengers() {
+        Query query =  entityManager
+                .createQuery("SELECT p.passengerId, p.dni, bp.boardingPassId FROM Passenger p "+
+                                "JOIN FETCH BoardingPass bp " +
+                                "ON  p.passengerId = bp.passenger.passengerId "
+                                );
+        return query.getResultList();
+    }
+    @Override
+    public List<Map<String, Object>> obtenerDatosTransformados(Integer id) {
+        List<Object> resultadosBD = (List<Object>) getPassengers();
+        List<Map<String, Object>> resultadosTransformados = new ArrayList<>();
+        for (Object resultado : resultadosBD) {
+            Object[] fila = (Object[]) resultado;
+            Map<String, Object> resultadoTransformado = new HashMap<>();
+            resultadoTransformado.put("passengerID", fila[0]);
+            resultadoTransformado.put("dni", fila[1]);
+            resultadoTransformado.put("boardingPass", fila[2]);
+            resultadosTransformados.add(resultadoTransformado);
+        }
+        return resultadosTransformados;
+    }
 }

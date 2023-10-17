@@ -1,14 +1,10 @@
 package com.col.pop.san.airline.domain.entity.response;
 
-import com.col.pop.san.airline.infraestructure.PassengerRepository;
-import jakarta.persistence.*;
-
-
 public class PassengerResponse {
 
     private Integer passengerId;
 
-    private Integer dni;
+    private String dni;
 
     private String name;
 
@@ -22,7 +18,6 @@ public class PassengerResponse {
 
     private Integer seatTypeId;
 
-    private Integer seatId;
 
     public Integer getSeatTypeId() {
         return seatTypeId;
@@ -40,11 +35,11 @@ public class PassengerResponse {
         this.passengerId = passengerId;
     }
 
-    public Integer getDni() {
+    public String getDni() {
         return dni;
     }
 
-    public void setDni(Integer dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 
@@ -88,15 +83,10 @@ public class PassengerResponse {
         this.purchaseId = purchaseId;
     }
 
-    public Integer getSeatId() {
-        return seatId;
-    }
+    public PassengerResponse(){}
 
-    public void setSeatId(Integer seatId) {
-        this.seatId = seatId;
-    }
 
-    public PassengerResponse(Integer seatTypeId, Integer passengerId, Integer dni, String name, Integer age, String country, Integer boardingPassId, Integer purchaseId, Integer seatId) {
+    public PassengerResponse(Integer seatTypeId, Integer passengerId, String dni, String name, Integer age, String country, Integer boardingPassId, Integer purchaseId) {
         this.passengerId = passengerId;
         this.dni = dni;
         this.name = name;
@@ -104,7 +94,6 @@ public class PassengerResponse {
         this.country = country;
         this.boardingPassId = boardingPassId;
         this.purchaseId = purchaseId;
-        this.seatId = seatId;
         this.seatTypeId = seatTypeId;
     }
 
@@ -118,8 +107,7 @@ public class PassengerResponse {
                 ", country='" + country + '\'' +
                 ", boardingPassId=" + boardingPassId +
                 ", purchaseId=" + purchaseId +
-                ", seatId=" + seatId +
-                '}';
+                ", seatId=";
     }
 
 

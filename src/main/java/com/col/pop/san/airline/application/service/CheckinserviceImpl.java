@@ -1,6 +1,8 @@
 package com.col.pop.san.airline.application.service;
 
 import com.col.pop.san.airline.domain.entity.Passenger;
+import com.col.pop.san.airline.domain.entity.response.PassengerResponse;
+import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba;
 import com.col.pop.san.airline.infraestructure.AirlineDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,9 +29,18 @@ public class CheckinserviceImpl implements Checkinservice {
         return airlineDAO.getPassengersByflightId(id);
     }
 
+    @Override
+    public List<PassengerResponse> getPassengersClassResponseByFlightId(Integer id) {
+        return airlineDAO.getPassengersClassResponseByFlightId(id);
+    }
+
+    @Override
+    public List<RespuestaPrueba> get3atributes() {
+        return airlineDAO.get3atributes();
+    }
+
     public List<Passenger> orderPassengersByAge(){
-        List<Passenger> passengers = getPassenger();
-        return passengers;
+        return getPassenger();
     }
 
 
