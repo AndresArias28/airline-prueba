@@ -15,13 +15,11 @@ public interface AirlineService {
 
     List<Flight>  getFlights(String Air);
 
-
-
     List<BoardingPass> getBoardingPassById();
 
     List<Flight> getFlightsUsingFetchBy(Integer id);
 
     List<Seat> getSeats();
 
-    List<Map<String, Object>> getPassengerNativetById(Integer id);
+    //List<Map<String, Object>> getPassengerNativetById(Integer id);
 }

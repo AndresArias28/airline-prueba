@@ -3,7 +3,6 @@ package com.col.pop.san.airline.ui;
 import com.col.pop.san.airline.application.service.AirlineService;
 import com.col.pop.san.airline.application.service.Checkinservice;
 import com.col.pop.san.airline.domain.entity.*;
-import com.col.pop.san.airline.domain.entity.response.PassengerResponse;
 import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/flights")
@@ -68,22 +66,30 @@ public class AirlineController {
         return airlineService.getSeats();
     }
 
-    @GetMapping("/nativeQ/{id}")
+   /* @GetMapping("/nativeQ/{id}")//NO SIRVE
     public ResponseEntity<?> getPassengerNativeByAgeId(@PathVariable Integer id){
         List<Map<String, Object>> passengers = airlineService.getPassengerNativetById(id);
         return new ResponseEntity<>(passengers, HttpStatus.OK);
 
     }
 
-    @GetMapping("/nativeResponseClass/{id}")
+    @GetMapping("/nativeResponseClass/{id}")//NO SRIVE
     public ResponseEntity<List<PassengerResponse>> getPassengerResponseClassByFlightId(@PathVariable Integer id) {
         List<PassengerResponse> passengersList = checkinservice.getPassengersClassResponseByFlightId(id);
         return new ResponseEntity<>(passengersList, HttpStatus.OK);
-    }
+    }*/
 
-    @GetMapping("/querymap3atributos")
+    @GetMapping("/passengersList")
     public ResponseEntity<List<RespuestaPrueba>> get3atributosByFlightId() {
         List<RespuestaPrueba> passengersList = checkinservice.get3atributes();
         return new ResponseEntity<>(passengersList, HttpStatus.OK);
     }
+
+    @GetMapping("/atributos/{id}")
+    public ResponseEntity<?> get3atributosByFlightId(@PathVariable Integer id) {
+        List<RespuestaPrueba> passengersList = checkinservice.get3atributes(id);
+        return new ResponseEntity<>(passengersList, HttpStatus.OK);
+    }
+
+
 }

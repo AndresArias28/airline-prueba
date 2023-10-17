@@ -1,24 +1,23 @@
 package com.col.pop.san.airline.application.service;
 
-import com.col.pop.san.airline.domain.entity.*;
+import com.col.pop.san.airline.domain.entity.Airplane;
+import com.col.pop.san.airline.domain.entity.BoardingPass;
+import com.col.pop.san.airline.domain.entity.Flight;
+import com.col.pop.san.airline.domain.entity.Seat;
 import com.col.pop.san.airline.infraestructure.AirlineDAO;
-import com.col.pop.san.airline.infraestructure.PassengerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class AirlineServiceImpl implements AirlineService {
 
     private final AirlineDAO airlineDAO;
-    private final PassengerRepository passengerRepository;
 
     @Autowired
-    public AirlineServiceImpl(AirlineDAO airlineDAO, PassengerRepository passengerRepository) {
+    public AirlineServiceImpl(AirlineDAO airlineDAO) {
         this.airlineDAO = airlineDAO;
-        this.passengerRepository = passengerRepository;
     }
 
     @Override
@@ -41,8 +40,6 @@ public class AirlineServiceImpl implements AirlineService {
         return airlineDAO.getFlightsByAirport(id);
     }
 
-
-
     @Override
     public List<BoardingPass> getBoardingPassById() {
         return airlineDAO.getBoardingPassById();
@@ -58,8 +55,8 @@ public class AirlineServiceImpl implements AirlineService {
         return airlineDAO.getSeats();
     }
 
-    @Override
+    /*@Override
     public List<Map<String, Object>> getPassengerNativetById(Integer id) {
         return airlineDAO.obtenerDatosTransformados(id);
-    }
+    }*/
 }

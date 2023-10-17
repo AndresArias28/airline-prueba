@@ -24,7 +24,7 @@ public class CheckinserviceImpl implements Checkinservice {
         return airlineDAO.getPassengerList();
     }
 
-    @Override
+   /* @Override
     public List<Passenger> getPassengersByflightId(Integer id) {
         return airlineDAO.getPassengersByflightId(id);
     }
@@ -32,11 +32,16 @@ public class CheckinserviceImpl implements Checkinservice {
     @Override
     public List<PassengerResponse> getPassengersClassResponseByFlightId(Integer id) {
         return airlineDAO.getPassengersClassResponseByFlightId(id);
-    }
+    }*/
 
     @Override
     public List<RespuestaPrueba> get3atributes() {
         return airlineDAO.get3atributes();
+    }
+
+    @Override
+    public List<RespuestaPrueba> get3atributes(Integer id) {
+        return airlineDAO.getPassengers(id);
     }
 
     public List<Passenger> orderPassengersByAge(){
