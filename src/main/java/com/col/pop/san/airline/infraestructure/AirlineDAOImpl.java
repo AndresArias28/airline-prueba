@@ -1,8 +1,8 @@
 package com.col.pop.san.airline.infraestructure;
 
 import com.col.pop.san.airline.domain.entity.*;
-import com.col.pop.san.airline.domain.entity.response.PassengerResponse;
 import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba;
+import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba2;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class AirlineDAOImpl implements AirlineDAO {
@@ -173,6 +171,20 @@ public class AirlineDAOImpl implements AirlineDAO {
                         "JOIN Flight f ON bp.flight.flightId = f.flightId " +
                         "WHERE f.flightId  = :data", Passenger.class
                 );*/
+    }
+
+    @Override
+    public List<RespuestaPrueba2> getPassengers2(Integer id) {
+        TypedQuery<RespuestaPrueba2> query =  entityManager
+                .createQuery("SELECT NEW com.col.pop.san.airline.domain.entity.response.RespuestaPrueba2(p.passengerId, p.dni, bp.boardingPassId, bp.seat.seatId ) FROM Passenger p " +
+                        "JOIN p.boardingsPasses bp " +
+                        "JOIN bp.seat " +
+                        "JOIN bp.flight f " +
+                        "WHERE f.flightId  = :data", RespuestaPrueba2.class
+                );
+        query.setParameter("data", id);
+        return query.getResultList();
+        //return null;
     }
 
 }

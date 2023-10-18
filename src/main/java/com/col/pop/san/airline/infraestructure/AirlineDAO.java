@@ -3,6 +3,7 @@ package com.col.pop.san.airline.infraestructure;
 import com.col.pop.san.airline.domain.entity.*;
 import com.col.pop.san.airline.domain.entity.response.PassengerResponse;
 import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba;
+import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba2;
 
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,8 @@ public interface AirlineDAO {
     List<RespuestaPrueba> get3atributes();
 
     List<RespuestaPrueba> getPassengers(Integer id);
+
+    List<RespuestaPrueba2> getPassengers2(Integer id);
 
     // List<Passenger> getPassengerNative(Integer id);
 }

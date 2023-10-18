@@ -10,4 +10,6 @@ public class RespuestaPrueba {
     private String dni;
     private int boardingPass;
 
+   // private int seatId;
+
 }
