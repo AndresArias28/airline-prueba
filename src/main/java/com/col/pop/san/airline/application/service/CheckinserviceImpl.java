@@ -7,6 +7,7 @@ import com.col.pop.san.airline.infraestructure.AirlineDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,7 +42,17 @@ public class CheckinserviceImpl implements Checkinservice {
 
     @Override
     public List<RespuestaPrueba> get3atributes(Integer id) {
-        return airlineDAO.getPassengers(id);
+        List<RespuestaPrueba> resultadosBD = airlineDAO.getPassengers(id);
+        List<RespuestaPrueba> resultadosTransformados = new ArrayList<>();
+
+        for (RespuestaPrueba fila : resultadosBD) {
+            RespuestaPrueba respuesta = new RespuestaPrueba();
+            respuesta.setPassengerID((Integer) fila.getPassengerID());
+            respuesta.setDni((String) fila.getDni());
+            respuesta.setBoardingPass((Integer) fila.getBoardingPass());
+            resultadosTransformados.add(respuesta);
+        }
+        return resultadosTransformados;
     }
 
     public List<Passenger> orderPassengersByAge(){

@@ -8,11 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "passenger")
+
 /*
 @NamedQuery(
         name = "find_passengerRepo",
@@ -42,6 +38,11 @@ import java.util.List;
                 }
         )
 )*/
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "passenger")
 public class Passenger {
 
     @Id

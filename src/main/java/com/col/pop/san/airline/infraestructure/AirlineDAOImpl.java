@@ -85,7 +85,7 @@ public class AirlineDAOImpl implements AirlineDAO {
         return query.getSingleResult();
     }
 
-    @Override
+   /* @Override
     public List<Passenger> getPassengersByflightId(Integer id) {
         TypedQuery<Passenger> getPassengersQuery = entityManager
                 .createQuery("SELECT p FROM Passenger p JOIN FETCH BoardingPass bp ON p.passengerId = bp.passenger.passengerId "
@@ -94,9 +94,9 @@ public class AirlineDAOImpl implements AirlineDAO {
         getPassengersQuery.setParameter("data", id);
         return getPassengersQuery.getResultList();
 
-    }
+    }*/
 
-    @Override
+   /* @Override
     public List<PassengerResponse> getPassengersClassResponseByFlightId(Integer id) {
         List<Object[]> resultadosBD = getPassengersClassByflightId(id);
         List<PassengerResponse> listaResultados = new ArrayList<PassengerResponse>();
@@ -116,7 +116,7 @@ public class AirlineDAOImpl implements AirlineDAO {
         }
 
         return listaResultados;
-    }
+    }*/
 
     @Override
     public List<RespuestaPrueba> get3atributes() {
@@ -142,7 +142,7 @@ public class AirlineDAOImpl implements AirlineDAO {
         return query.getResultList();
     }
 
-    private List<Object[]> getPassengersClassByflightId(Integer id) {
+   /* private List<Object[]> getPassengersClassByflightId(Integer id) {
         Query query = entityManager.createQuery(
              "SELECT p.passengerId, p.dni, p.name, p.age, p.country, bp.boardingPassId, pu.purchaseId, s.seatTypeId " +
                 "FROM Passenger p "+
@@ -155,22 +155,7 @@ public class AirlineDAOImpl implements AirlineDAO {
         query.setParameter("data", id);
         final List<Object[]> resultList = query.getResultList();
         return resultList;
-    }
-
-    @Override
-    public List<Map<String, Object>> obtenerDatosTransformados(Integer id) {
-        List<RespuestaPrueba> resultadosBD = getPassengers(id);
-        List<Map<String, Object>> resultadosTransformados = new ArrayList<>();
-        for (Object resultado : resultadosBD) {
-            Object[] fila = (Object[]) resultado;
-            Map<String, Object> resultadoTransformado = new HashMap<>();
-            resultadoTransformado.put("passengerID", fila[0]);
-            resultadoTransformado.put("dni", fila[1]);
-            resultadoTransformado.put("boardingPass", fila[2]);
-            resultadosTransformados.add(resultadoTransformado);
-        }
-        return resultadosTransformados;
-    }
+    }*/
 
     @Override
     public List<RespuestaPrueba> getPassengers(Integer id) {
@@ -180,24 +165,14 @@ public class AirlineDAOImpl implements AirlineDAO {
                         "JOIN bp.flight f " +
                         "WHERE f.flightId  = :data", RespuestaPrueba.class
                 );
-                //OTRA FORMA LARGA PARA LA CONSULTA JPA
+        query.setParameter("data", id);
+        return query.getResultList();
+        //OTRA FORMA LARGA PARA LA CONSULTA JPA
                /* .createQuery("SELECT p.passengerId, p.dni, bp.boardingPassId FROM Passenger p "+
                         "JOIN BoardingPass bp ON p.passengerId = bp.passenger.passengerId " +
                         "JOIN Flight f ON bp.flight.flightId = f.flightId " +
                         "WHERE f.flightId  = :data", Passenger.class
                 );*/
-        query.setParameter("data", id);
-        List<RespuestaPrueba> resultadosBD = query.getResultList();
-        List<RespuestaPrueba> resultadosTransformados = new ArrayList<>();
-
-        for (RespuestaPrueba fila : resultadosBD) {
-            RespuestaPrueba respuesta = new RespuestaPrueba();
-            respuesta.setPassengerID((Integer) fila.getPassengerID());
-            respuesta.setDni((String) fila.getDni());
-            respuesta.setBoardingPass((Integer) fila.getBoardingPass());
-            resultadosTransformados.add(respuesta);
-        }
-        return resultadosTransformados;
     }
 
 }

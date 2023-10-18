@@ -23,13 +23,13 @@ public interface AirlineDAO {
 
     List<Seat> getSeats();
 
-    List<Map<String, Object>> obtenerDatosTransformados(Integer id);
+    //List<Map<String, Object>> obtenerDatosTransformados(Integer id);
 
     List<Passenger> getPassengerList();
 
-    List<Passenger> getPassengersByflightId(Integer id);
+    //List<Passenger> getPassengersByflightId(Integer id);
 
-    List<PassengerResponse> getPassengersClassResponseByFlightId(Integer id);
+    //List<PassengerResponse> getPassengersClassResponseByFlightId(Integer id);
 
     List<RespuestaPrueba> get3atributes();
 
