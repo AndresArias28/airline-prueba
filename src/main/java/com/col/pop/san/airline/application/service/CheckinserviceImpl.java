@@ -88,6 +88,7 @@ public class CheckinserviceImpl implements Checkinservice {
             respuesta.setCountry((String) objetoRespuestaBD.getCountry());
             respuesta.setBoardingPassId((Integer) objetoRespuestaBD.getBoardingPassId());
             respuesta.setPurchaseId((Integer) objetoRespuestaBD.getPurchaseId());
+            respuesta.setSeatTypeId((Integer) objetoRespuestaBD.getSeatTypeId());
             Integer seatIdAsignacion = calcularSeatId(objetoRespuestaBD);
             respuesta.setSeatId(seatIdAsignacion);
             resultadosTransformados.add(respuesta);

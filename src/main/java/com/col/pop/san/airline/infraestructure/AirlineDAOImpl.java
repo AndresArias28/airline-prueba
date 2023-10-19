@@ -191,8 +191,9 @@ public class AirlineDAOImpl implements AirlineDAO {
     @Override
     public List<PassengerResponse> getPassengersAll(Integer id) {
         TypedQuery<PassengerResponse> query =  entityManager
-                .createQuery("SELECT NEW com.col.pop.san.airline.domain.entity.response.PassengerResponse(p.passengerId, p.dni, p.name, p.age, p.country, bp.boardingPassId, pu.purchaseId, bp.seat.seatId) FROM Passenger p " +
+                .createQuery("SELECT NEW com.col.pop.san.airline.domain.entity.response.PassengerResponse(p.passengerId, p.dni, p.name, p.age, p.country, bp.boardingPassId, pu.purchaseId, st.seatTypeId, bp.seat.seatId) FROM Passenger p " +
                         "JOIN p.boardingsPasses bp " +
+                        "JOIN bp.seatType st " +
                         "JOIN bp.purchase pu " +
                         "JOIN bp.seat " +
                         "JOIN bp.flight f " +

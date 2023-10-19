@@ -19,7 +19,7 @@ public class PassengerResponse {
 
     private Integer purchaseId;
 
-    //private Integer seatTypeId;
+    private Integer seatTypeId;
 
     private Integer seatId;
 
@@ -27,7 +27,7 @@ public class PassengerResponse {
 
     }
 
-    public PassengerResponse(Integer passengerId, String dni, String name, Integer age, String country, Integer boardingPassId, Integer purchaseId, Integer seatId) {
+    public PassengerResponse(Integer passengerId, String dni, String name, Integer age, String country, Integer boardingPassId, Integer purchaseId, Integer seatTypeId, Integer seatId) {
         this.passengerId = passengerId;
         this.dni = dni;
         this.name = name;
@@ -35,7 +35,7 @@ public class PassengerResponse {
         this.country = country;
         this.boardingPassId = boardingPassId;
         this.purchaseId = purchaseId;
-        //this.seatTypeId = seatTypeId;
+        this.seatTypeId = seatTypeId;
         this.seatId = seatId;
     }
 }
