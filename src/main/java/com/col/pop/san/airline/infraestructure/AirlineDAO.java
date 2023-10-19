@@ -38,5 +38,7 @@ public interface AirlineDAO {
 
     List<RespuestaPrueba2> getPassengers2(Integer id);
 
+    List<PassengerResponse> getPassengersAll(Integer id);
+
     // List<Passenger> getPassengerNative(Integer id);
 }

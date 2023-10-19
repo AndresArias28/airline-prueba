@@ -5,18 +5,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-
-
 public class RespuestaPrueba2 {
-    private int passengerId;
+    private Integer passengerId;
     private String dniId;
-    private int boardingPassId;
-    private int seatId;
+    private Integer boardingPassId;
+    private Integer seatId;
 
     public RespuestaPrueba2() {
     }
 
-    public RespuestaPrueba2(int passengerId, String dniId, int boardingPassId, int seatId) {
+    public RespuestaPrueba2(Integer passengerId, String dniId, Integer boardingPassId, Integer seatId) {
         this.passengerId = passengerId;
         this.dniId = dniId;
         this.boardingPassId = boardingPassId;

@@ -62,35 +62,52 @@ public class CheckinserviceImpl implements Checkinservice {
         List<RespuestaPrueba2> resultadosBD = airlineDAO.getPassengers2(id);
         List<RespuestaPrueba2> resultadosTransformados = new ArrayList<>();
 
-        for (RespuestaPrueba2 fila : resultadosBD) {
+        for (RespuestaPrueba2 objetoRespuestaBD : resultadosBD) {
             RespuestaPrueba2 respuesta = new RespuestaPrueba2();
-            respuesta.setPassengerId((Integer) fila.getPassengerId());
-            respuesta.setDniId((String) fila.getDniId());
-            respuesta.setBoardingPassId((Integer) fila.getBoardingPassId());
-            Integer seatIdAsignacion = calcularseatId(fila);
+            respuesta.setPassengerId((Integer) objetoRespuestaBD.getPassengerId());
+            respuesta.setDniId((String) objetoRespuestaBD.getDniId());
+            respuesta.setBoardingPassId((Integer) objetoRespuestaBD.getBoardingPassId());
+            Integer seatIdAsignacion = calcularSeatId3atributes(objetoRespuestaBD);
             respuesta.setSeatId(seatIdAsignacion);
             resultadosTransformados.add(respuesta);
         }
         return resultadosTransformados;
     }
+
+    @Override
+    public List<PassengerResponse> getAllatributes(Integer id) {
+        List<PassengerResponse> resultadosBD = airlineDAO.getPassengersAll(id);
+        List<PassengerResponse> resultadosTransformados = new ArrayList<>();
+
+        for (PassengerResponse objetoRespuestaBD : resultadosBD) {
+            PassengerResponse respuesta = new PassengerResponse();
+            respuesta.setPassengerId((Integer) objetoRespuestaBD.getPassengerId());
+            respuesta.setDni((String) objetoRespuestaBD.getDni());
+            respuesta.setName((String) objetoRespuestaBD.getName());
+            respuesta.setAge((Integer) objetoRespuestaBD.getAge());
+            respuesta.setCountry((String) objetoRespuestaBD.getCountry());
+            respuesta.setBoardingPassId((Integer) objetoRespuestaBD.getBoardingPassId());
+            respuesta.setPurchaseId((Integer) objetoRespuestaBD.getPurchaseId());
+            Integer seatIdAsignacion = calcularSeatId(objetoRespuestaBD);
+            respuesta.setSeatId(seatIdAsignacion);
+            resultadosTransformados.add(respuesta);
+        }
+        return resultadosTransformados;
+    }
+
     Integer aux = 0;
-    private Integer calcularseatId(RespuestaPrueba2 fila) {
+    private Integer calcularSeatId(PassengerResponse objectPassengerResponse) {
         aux = aux+ 3;
         return aux;
 
     }
 
-    public Integer asignacionAsiento(){
-        int aux =+ 1;
+
+    private Integer calcularSeatId3atributes(RespuestaPrueba2 objectPassengerResponse) {
+        aux = aux+ 3;
         return aux;
+
     }
-
-    public List<Passenger> orderPassengersByAge(){
-        return getPassenger();
-    }
-
-
-
 
 
 }

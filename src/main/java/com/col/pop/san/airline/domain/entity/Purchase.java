@@ -22,6 +22,6 @@ public class Purchase {
     @Column(name = "purchase_date")
     private Integer purchaseDate;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "purchase")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "purchase")
     private List<BoardingPass> boardingPasses;
 }

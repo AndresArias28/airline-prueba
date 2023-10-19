@@ -1,6 +1,7 @@
 package com.col.pop.san.airline.infraestructure;
 
 import com.col.pop.san.airline.domain.entity.*;
+import com.col.pop.san.airline.domain.entity.response.PassengerResponse;
 import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba;
 import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba2;
 import jakarta.persistence.EntityManager;
@@ -185,6 +186,20 @@ public class AirlineDAOImpl implements AirlineDAO {
         query.setParameter("data", id);
         return query.getResultList();
         //return null;
+    }
+
+    @Override
+    public List<PassengerResponse> getPassengersAll(Integer id) {
+        TypedQuery<PassengerResponse> query =  entityManager
+                .createQuery("SELECT NEW com.col.pop.san.airline.domain.entity.response.PassengerResponse(p.passengerId, p.dni, p.name, p.age, p.country, bp.boardingPassId, pu.purchaseId, bp.seat.seatId) FROM Passenger p " +
+                        "JOIN p.boardingsPasses bp " +
+                        "JOIN bp.purchase pu " +
+                        "JOIN bp.seat " +
+                        "JOIN bp.flight f " +
+                        "WHERE f.flightId  = :data", PassengerResponse.class
+                );
+        query.setParameter("data", id);
+        return query.getResultList();
     }
 
 }

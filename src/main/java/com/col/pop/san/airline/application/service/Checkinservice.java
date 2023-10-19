@@ -1,6 +1,7 @@
 package com.col.pop.san.airline.application.service;
 
 import com.col.pop.san.airline.domain.entity.Passenger;
+import com.col.pop.san.airline.domain.entity.response.PassengerResponse;
 import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba;
 import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba2;
 
@@ -19,4 +20,6 @@ public interface Checkinservice {
     List<RespuestaPrueba> get3atributes(Integer id);
 
     List<RespuestaPrueba2> get3atributes2(Integer id);
+
+    List<PassengerResponse> getAllatributes(Integer id);
 }
