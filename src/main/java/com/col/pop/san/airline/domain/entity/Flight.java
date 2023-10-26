@@ -37,5 +37,5 @@ public class Flight {
     private Airplane airplane;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "flight")
-    private List<BoardingPass> BoardingPasses;
+    private List<BoardingPass> boardingPasses;
 }

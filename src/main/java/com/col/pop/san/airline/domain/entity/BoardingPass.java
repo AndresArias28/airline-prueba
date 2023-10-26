@@ -6,41 +6,41 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "boarding_pass")
-public class BoardingPass {
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Entity
+    @Table(name = "boarding_pass")
+    public class BoardingPass {
 
-    @Id
-    @Column(name = "boarding_pass_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer boardingPassId;
+        @Id
+        @Column(name = "boarding_pass_id")
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Integer boardingPassId;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "passenger_id")
-    private Passenger passenger;
+        @JsonIgnore
+        @ManyToOne
+        @JoinColumn(name = "passenger_id")
+        private Passenger passenger;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "purchase_id")
-    private Purchase purchase;
+        @JsonIgnore
+        @ManyToOne
+        @JoinColumn(name = "purchase_id")
+        private Purchase purchase;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "flight_id")
-    private Flight flight;
+        @JsonIgnore
+        @ManyToOne
+        @JoinColumn(name = "flight_id")
+        private Flight flight;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "seat_id")
-    private Seat seat;
+        @JsonIgnore
+        @ManyToOne
+        @JoinColumn(name = "seat_id")
+        private Seat seat;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "seat_type_id")
-    private SeatType seatType;
+        @JsonIgnore
+        @ManyToOne
+        @JoinColumn(name = "seat_type_id")
+        private SeatType seatType;
 
-  }
+      }

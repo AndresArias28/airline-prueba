@@ -3,9 +3,7 @@ package com.col.pop.san.airline.ui;
 import com.col.pop.san.airline.application.service.AirlineService;
 import com.col.pop.san.airline.application.service.Checkinservice;
 import com.col.pop.san.airline.domain.entity.*;
-import com.col.pop.san.airline.domain.entity.response.PassengerResponse;
-import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba;
-import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba2;
+import com.col.pop.san.airline.domain.entity.response.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -95,15 +93,17 @@ public class AirlineController {
 
     @GetMapping("/atributos2/{id}")
     public ResponseEntity<?> get3atributosByFlightId2(@PathVariable Integer id) {
-        List<RespuestaPrueba2> passengersList = checkinservice.get3atributes2(id);
+        List<PassengerResponse> passengersList = checkinservice.getAllatributes(id);
         return new ResponseEntity<>(passengersList, HttpStatus.OK);
     }
 
     @GetMapping("/atributesAll/{id}")
     public ResponseEntity<?> getAllatributosByFlightId(@PathVariable Integer id) {
         List<PassengerResponse> passengersList = checkinservice.getAllatributes(id);
-        return new ResponseEntity<>(passengersList, HttpStatus.OK);
+        FlightData response = checkinservice.getResponseFlight(id, passengersList);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
 
 }

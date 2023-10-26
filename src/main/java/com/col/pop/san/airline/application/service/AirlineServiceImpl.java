@@ -25,10 +25,7 @@ public class AirlineServiceImpl implements AirlineService {
         return airlineDAO.getAirplanes();
     }
 
-    @Override
-    public List<Flight> findFlight() {
-        return airlineDAO.getFlights();
-    }
+
 
     @Override
     public Airplane findAirplaneFetch(Integer AirplaneId) {
@@ -53,6 +50,11 @@ public class AirlineServiceImpl implements AirlineService {
     @Override
     public List<Seat> getSeats() {
         return airlineDAO.getSeats();
+    }
+
+    @Override
+    public List<Flight> findFlight() {
+        return null;
     }
 
     /*@Override

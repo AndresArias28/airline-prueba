@@ -1,9 +1,7 @@
 package com.col.pop.san.airline.application.service;
 
 import com.col.pop.san.airline.domain.entity.Passenger;
-import com.col.pop.san.airline.domain.entity.response.PassengerResponse;
-import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba;
-import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba2;
+import com.col.pop.san.airline.domain.entity.response.*;
 import com.col.pop.san.airline.infraestructure.AirlineDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -96,16 +94,38 @@ public class CheckinserviceImpl implements Checkinservice {
         return resultadosTransformados;
     }
 
+    @Override
+    public FlightData getResponse(Integer id) {
+        FlightData resultadoBD = airlineDAO.getFlightRes(id);
+        FlightData respuesta = new FlightData();
+        respuesta.setCode(200);
+        respuesta.setFlightId(resultadoBD.getFlightId());
+        respuesta.setTakeoffDateTime(resultadoBD.getTakeoffDateTime());
+        respuesta.setTakeoffAirport(resultadoBD.getTakeoffAirport());
+        respuesta.setLandingDateTime(resultadoBD.getLandingDateTime());
+        respuesta.setLandingAirport(resultadoBD.getLandingAirport());
+        respuesta.setAirplaneId(resultadoBD.getAirplaneId());
+        respuesta.setPassengers(getAllatributes(id));
+
+        return respuesta;
+    }
+
+    @Override
+    public FlightData getResponseFlight(Integer id, List<PassengerResponse> passengersList) {
+       return airlineDAO.getFlights(id, passengersList);
+    }
+
     Integer aux = 0;
+
     private Integer calcularSeatId(PassengerResponse objectPassengerResponse) {
-        aux = aux+ 3;
+        aux = aux + 3;
         return aux;
 
     }
 
 
     private Integer calcularSeatId3atributes(RespuestaPrueba2 objectPassengerResponse) {
-        aux = aux+ 3;
+        aux = aux + 3;
         return aux;
 
     }

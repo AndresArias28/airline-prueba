@@ -1,13 +1,13 @@
 package com.col.pop.san.airline.infraestructure;
 
 import com.col.pop.san.airline.domain.entity.*;
-import com.col.pop.san.airline.domain.entity.response.PassengerResponse;
-import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba;
-import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba2;
+import com.col.pop.san.airline.domain.entity.response.*;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -17,19 +17,16 @@ import java.util.List;
 public class AirlineDAOImpl implements AirlineDAO {
 
     private final EntityManager entityManager;
+    private final JdbcTemplate jdbcTemplate;
+
 
     @Autowired
-    public AirlineDAOImpl(EntityManager entityManager) {
+    public AirlineDAOImpl(EntityManager entityManager, JdbcTemplate jdbcTemplate) {
         this.entityManager = entityManager;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
 
-    @Override
-    public List<Flight> getFlights() {
-        TypedQuery<Flight> query = entityManager
-                .createQuery("FROM Flight order by takeoffAirport", Flight.class);
-        return query.getResultList();
-    }
 
     @Override
     public List<Flight> getFlightsByAirport(String takeoffAirport) {
@@ -75,6 +72,8 @@ public class AirlineDAOImpl implements AirlineDAO {
                 .createQuery("FROM Airplane order by name", Airplane.class);
         return query.getResultList();
     }
+
+
 
     @Override
     public Airplane findAirplaneAndFlightsByAirplaneId(Integer id) {
@@ -191,16 +190,79 @@ public class AirlineDAOImpl implements AirlineDAO {
     @Override
     public List<PassengerResponse> getPassengersAll(Integer id) {
         TypedQuery<PassengerResponse> query =  entityManager
-                .createQuery("SELECT NEW com.col.pop.san.airline.domain.entity.response.PassengerResponse(p.passengerId, p.dni, p.name, p.age, p.country, bp.boardingPassId, pu.purchaseId, st.seatTypeId, bp.seat.seatId) FROM Passenger p " +
+                .createQuery("SELECT NEW com.col.pop.san.airline.domain.entity.response.PassengerResponse(" +
+                        "p.passengerId, p.dni, p.name, p.age, p.country, bp.boardingPassId," +
+                        "pu.purchaseId, st.seatTypeId, bp.seat.seatId) " +
+                        "FROM Passenger p " +
                         "JOIN p.boardingsPasses bp " +
                         "JOIN bp.seatType st " +
                         "JOIN bp.purchase pu " +
-                        "JOIN bp.seat " +
                         "JOIN bp.flight f " +
                         "WHERE f.flightId  = :data", PassengerResponse.class
                 );
         query.setParameter("data", id);
         return query.getResultList();
     }
+
+    @Override
+    public FlightData getFlights(Integer data, List<PassengerResponse> passengersList) {
+        String sql = "SELECT f.flight_id, takeoff_date_time, takeoff_airport, ai.airplane_id " +
+                "FROM flight f " +
+                "JOIN airplane ai ON f.airplane_id = ai.airplane_id " +
+                "WHERE f.flight_id = ?";
+        Object[] params = { data };
+
+        List<FlightData> results =  jdbcTemplate.query(sql, params, new TuEntidadRowMapper(passengersList));
+        if (!results.isEmpty()) {
+            return results.get(0);  // Retorna el primer resultado
+        } else {
+            return null;  // Maneja el caso en el que no se encontraron resultados
+        }
+    }
+
+
+   @Override
+   public FlightData getFlightRes(Integer id) {
+       try {
+           TypedQuery<FlightData> query = entityManager.createQuery(
+                   "SELECT NEW com.col.pop.san.airline.domain.entity.response.FlightData(" +
+                           "f.flightId, " +
+                           "f.takeoffDateTime, " +
+                           "f.takeoffAirport, " +
+                           "f.landingDateTime, " +
+                           "f.landingAirport, " +
+                           "ai.airplaneId, " +
+                           "(SELECT NEW com.col.pop.san.airline.domain.entity.response.PassengerResponse(" +
+                           "p.passengerId, " +
+                           "p.dni, " +
+                           "p.name, " +
+                           "p.age, " +
+                           "p.country, " +
+                           "bp.boardingPassId, " +
+                           "pu.purchaseId, " +
+                           "st.seatTypeId, " +
+                           "bp.seat.seatId) " +
+                           "FROM Passenger p " +
+                           "JOIN p.boardingsPasses bp " +
+                           "JOIN bp.purchase pu " +
+                           "JOIN bp.seat s " +
+                           "JOIN bp.seatType st " +
+                           "WHERE p.flight.flightId = f.flightId) " +
+                           ") " +
+                           "FROM Flight f " +
+                           "JOIN f.airplane ai " +
+                           "WHERE f.flightId = :data", FlightData.class
+           );
+
+           query.setParameter("data", id);
+           return  query.getSingleResult();
+       } catch (NoResultException e) {
+           e.printStackTrace();
+           return null;
+       }
+   }
+
+
+
 
 }

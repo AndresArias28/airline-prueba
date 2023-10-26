@@ -9,7 +9,7 @@ public interface AirlineService {
 
     List<Airplane> findAll();
 
-    List<Flight> findFlight();
+    //List<Flight> findFlight();
 
     Airplane findAirplaneFetch(Integer AirplaneId);
 
@@ -20,6 +20,8 @@ public interface AirlineService {
     List<Flight> getFlightsUsingFetchBy(Integer id);
 
     List<Seat> getSeats();
+
+    List<Flight> findFlight();
 
     //List<Map<String, Object>> getPassengerNativetById(Integer id);
 }

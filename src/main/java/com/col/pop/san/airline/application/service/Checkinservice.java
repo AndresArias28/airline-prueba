@@ -1,9 +1,7 @@
 package com.col.pop.san.airline.application.service;
 
 import com.col.pop.san.airline.domain.entity.Passenger;
-import com.col.pop.san.airline.domain.entity.response.PassengerResponse;
-import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba;
-import com.col.pop.san.airline.domain.entity.response.RespuestaPrueba2;
+import com.col.pop.san.airline.domain.entity.response.*;
 
 import java.util.List;
 
@@ -22,4 +20,10 @@ public interface Checkinservice {
     List<RespuestaPrueba2> get3atributes2(Integer id);
 
     List<PassengerResponse> getAllatributes(Integer id);
+
+    FlightData getResponse(Integer id);
+
+    FlightData getResponseFlight(Integer id, List<PassengerResponse> passengersList);
+
+
 }
