@@ -206,10 +206,10 @@ public class AirlineDAOImpl implements AirlineDAO {
 
     @Override
     public FlightData getFlights(Integer data, List<PassengerResponse> passengersList) {
-        String sql = "SELECT f.flight_id, takeoff_date_time, takeoff_airport, ai.airplane_id " +
+        String sql = "SELECT f.flight_id, f.takeoff_date_time, f.takeoff_airport, ai.airplane_id " +
                 "FROM flight f " +
                 "JOIN airplane ai ON f.airplane_id = ai.airplane_id " +
-                "WHERE f.flight_id = ?";
+                "WHERE f.flight_id = ? ";
         Object[] params = { data };
 
         List<FlightData> results =  jdbcTemplate.query(sql, params, new TuEntidadRowMapper(passengersList));
