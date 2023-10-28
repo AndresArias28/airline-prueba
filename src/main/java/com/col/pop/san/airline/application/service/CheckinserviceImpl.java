@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -98,7 +99,6 @@ public class CheckinserviceImpl implements Checkinservice {
     public FlightData getResponse(Integer id) {
         FlightData resultadoBD = airlineDAO.getFlightRes(id);
         FlightData respuesta = new FlightData();
-        respuesta.setCode(200);
         respuesta.setFlightId(resultadoBD.getFlightId());
         respuesta.setTakeoffDateTime(resultadoBD.getTakeoffDateTime());
         respuesta.setTakeoffAirport(resultadoBD.getTakeoffAirport());
@@ -113,6 +113,15 @@ public class CheckinserviceImpl implements Checkinservice {
     @Override
     public FlightData getResponseFlight(Integer id, List<PassengerResponse> passengersList) {
        return airlineDAO.getFlights(id, passengersList);
+    }
+
+    @Override
+    public FlightResponse getResponseAllData(Integer id, FlightData flightData) {
+        FlightResponse fr = new FlightResponse();
+        fr.setCode(200);
+        fr.setData(flightData);
+        return fr;
+
     }
 
     Integer aux = 0;

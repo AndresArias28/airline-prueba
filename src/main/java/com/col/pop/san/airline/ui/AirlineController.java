@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/flights")
+//@RequestMapping("/flights")
 public class AirlineController {
 
     private final AirlineService airlineService;
@@ -97,11 +97,19 @@ public class AirlineController {
         return new ResponseEntity<>(passengersList, HttpStatus.OK);
     }
 
-    @GetMapping("/atributesAll/{id}")
+    @GetMapping("/flights/{id}/atributesAll")
     public ResponseEntity<?> getAllatributosByFlightId(@PathVariable Integer id) {
         List<PassengerResponse> passengersList = checkinservice.getAllatributes(id);
         FlightData response = checkinservice.getResponseFlight(id, passengersList);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/flights/{id}/passengers")
+    public ResponseEntity<?> getAtributesByFlightId(@PathVariable Integer id) {
+        List<PassengerResponse> passengersList = checkinservice.getAllatributes(id);
+        FlightData responseData = checkinservice.getResponseFlight(id, passengersList);
+        FlightResponse flightResponse = checkinservice.getResponseAllData(id, responseData);
+        return new ResponseEntity<>(flightResponse, HttpStatus.OK);
     }
 
 

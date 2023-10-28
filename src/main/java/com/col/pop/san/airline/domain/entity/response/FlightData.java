@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data @AllArgsConstructor @NoArgsConstructor
-public class FlightData extends FlightResponse{
+public class FlightData{
     private Integer flightId;
     private Integer takeoffDateTime;
     private String takeoffAirport;

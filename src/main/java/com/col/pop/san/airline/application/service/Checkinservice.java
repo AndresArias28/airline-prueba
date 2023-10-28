@@ -26,4 +26,5 @@ public interface Checkinservice {
     FlightData getResponseFlight(Integer id, List<PassengerResponse> passengersList);
 
 
+    FlightResponse getResponseAllData(Integer id, FlightData flightData);
 }

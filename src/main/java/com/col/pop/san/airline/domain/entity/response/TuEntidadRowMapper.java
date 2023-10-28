@@ -1,5 +1,6 @@
 package com.col.pop.san.airline.domain.entity.response;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +20,8 @@ public  class TuEntidadRowMapper implements RowMapper<FlightData> {
         entidad.setFlightId(resultSet.getInt("flight_id"));
         entidad.setTakeoffDateTime(resultSet.getInt("takeoff_date_time"));
         entidad.setTakeoffAirport(resultSet.getString("takeoff_airport"));
+        entidad.setLandingDateTime(resultSet.getInt("landing_date_time"));
+        entidad.setLandingAirport(resultSet.getString("landing_airport"));
         entidad.setAirplaneId(resultSet.getInt("airplane_id"));
         entidad.setPassengers(passegenrs);  // Asigna la lista de pasajeros a la entidad FlightData
         return entidad;

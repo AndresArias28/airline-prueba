@@ -31,10 +31,11 @@ public interface AirlineDAO {
 
     List<PassengerResponse> getPassengersAll(Integer id);
 
-    //FlightResponse getFlightResponse(Integer id);
-
     FlightData getFlightRes(Integer id);
+
     FlightData getFlights(Integer id, List<PassengerResponse> passengersList);
+
+    FlightResponse getAllResponseByFlight(Integer id, FlightData flightData);
 
     // List<Passenger> getPassengerNative(Integer id);
 }

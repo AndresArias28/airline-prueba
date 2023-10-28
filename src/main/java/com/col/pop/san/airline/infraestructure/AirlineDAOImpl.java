@@ -19,14 +19,11 @@ public class AirlineDAOImpl implements AirlineDAO {
     private final EntityManager entityManager;
     private final JdbcTemplate jdbcTemplate;
 
-
     @Autowired
     public AirlineDAOImpl(EntityManager entityManager, JdbcTemplate jdbcTemplate) {
         this.entityManager = entityManager;
         this.jdbcTemplate = jdbcTemplate;
     }
-
-
 
     @Override
     public List<Flight> getFlightsByAirport(String takeoffAirport) {
@@ -206,12 +203,11 @@ public class AirlineDAOImpl implements AirlineDAO {
 
     @Override
     public FlightData getFlights(Integer data, List<PassengerResponse> passengersList) {
-        String sql = "SELECT f.flight_id, f.takeoff_date_time, f.takeoff_airport, ai.airplane_id " +
+        String sql = "SELECT f.flight_id, f.takeoff_date_time, f.takeoff_airport, f.landing_date_time, landing_airport, ai.airplane_id " +
                 "FROM flight f " +
                 "JOIN airplane ai ON f.airplane_id = ai.airplane_id " +
                 "WHERE f.flight_id = ? ";
         Object[] params = { data };
-
         List<FlightData> results =  jdbcTemplate.query(sql, params, new TuEntidadRowMapper(passengersList));
         if (!results.isEmpty()) {
             return results.get(0);  // Retorna el primer resultado
@@ -220,8 +216,14 @@ public class AirlineDAOImpl implements AirlineDAO {
         }
     }
 
+    @Override
+    public FlightResponse getAllResponseByFlight(Integer id, FlightData flightData) {
 
-   @Override
+        return null;
+    }
+
+
+    @Override
    public FlightData getFlightRes(Integer id) {
        try {
            TypedQuery<FlightData> query = entityManager.createQuery(

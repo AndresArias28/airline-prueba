@@ -1,7 +1,9 @@
 package com.col.pop.san.airline;
 
+import com.col.pop.san.airline.application.service.Checkinservice;
 import com.col.pop.san.airline.domain.entity.Flight;
 import com.col.pop.san.airline.domain.entity.response.FlightData;
+import com.col.pop.san.airline.domain.entity.response.FlightResponse;
 import com.col.pop.san.airline.domain.entity.response.PassengerResponse;
 import com.col.pop.san.airline.infraestructure.AirlineDAO;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,9 @@ public class flightTestRepository {
     @Autowired
     AirlineDAO airlineDAO;
 
+    @Autowired
+    Checkinservice checkinservice;
+
     @Test
     public void getFlights(){
         List<PassengerResponse> listp = new ArrayList<PassengerResponse>();
@@ -23,6 +28,12 @@ public class flightTestRepository {
         FlightData flights = airlineDAO.getFlights(3, listp);
        System.out.println("flights = " + flights);
 
+    }
+
+    @Test
+    public void getResponses(){
+        FlightData fd = new FlightData();
+        FlightResponse frTest = checkinservice.getResponseAllData(5, fd);
     }
 
 }
