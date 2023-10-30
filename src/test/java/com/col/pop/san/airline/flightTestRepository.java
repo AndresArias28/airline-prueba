@@ -25,7 +25,7 @@ public class flightTestRepository {
     public void getFlights(){
         List<PassengerResponse> listp = new ArrayList<PassengerResponse>();
         listp.add(new PassengerResponse(1,"sdfs123", "santi",23, "popayan", 010, 1,2, 1));
-        FlightData flights = airlineDAO.getFlights(3, listp);
+        FlightData flights = airlineDAO.getFlightsAtributes(3, listp);
        System.out.println("flights = " + flights);
 
     }

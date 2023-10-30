@@ -7,35 +7,10 @@ import java.util.List;
 
 public interface AirlineDAO {
 
-    List<Airplane> getAirplanes();
+    List<PassengerResponse> getPassengersAtributes(Integer id);
 
-   // List<Flight> getFlights();
+    FlightData getFlightsAtributes(Integer id, List<PassengerResponse> passengersList);
 
-    Airplane findAirplaneAndFlightsByAirplaneId(Integer Id);
+    List<Seat> getListOfSeatbyFlightId(Integer id);
 
-    List<Flight> getFlightsByAirport(String airport);
-
-    List<BoardingPass> getBoardingPassById();
-
-    List<Flight> getFlightsUsingFetchBy(Integer id);
-
-    List<Seat> getSeats();
-
-    List<Passenger> getPassengerList();
-
-    List<RespuestaPrueba> get3atributes();
-
-    List<RespuestaPrueba> getPassengers(Integer id);
-
-    List<RespuestaPrueba2> getPassengers2(Integer id);
-
-    List<PassengerResponse> getPassengersAll(Integer id);
-
-    FlightData getFlightRes(Integer id);
-
-    FlightData getFlights(Integer id, List<PassengerResponse> passengersList);
-
-    FlightResponse getAllResponseByFlight(Integer id, FlightData flightData);
-
-    // List<Passenger> getPassengerNative(Integer id);
 }
