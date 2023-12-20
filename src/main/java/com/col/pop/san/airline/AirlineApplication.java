@@ -15,8 +15,9 @@ public class AirlineApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AirlineApplication.class, args);
 	}
+}
 
-	@Bean
+/*	@Bean
 	public CommandLineRunner commandLineRunner(Checkinservice checkinservice) {
 
 		return runner -> {
@@ -28,8 +29,4 @@ public class AirlineApplication {
 			//System.out.println("p.getCountry() = " + p.getCountry());
 
 		};
-	}
-
-
-}
-
+	}*/

@@ -3,8 +3,6 @@ package com.col.pop.san.airline.domain.entity.response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Data @AllArgsConstructor @NoArgsConstructor

@@ -6,23 +6,14 @@ import lombok.Data;
 public class PassengerResponse {
 
     private Integer passengerId;
-
     private String dni;
-
     private String name;
-
     private Integer age;
-
     private String country;
-
     private Integer boardingPassId;
-
     private Integer purchaseId;
-
     private Integer seatTypeId;
-
     private Integer seatId;
-
     public PassengerResponse() {
 
     }

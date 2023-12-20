@@ -1,9 +1,7 @@
 package com.col.pop.san.airline.ui;
 
 import com.col.pop.san.airline.application.service.Checkinservice;
-import com.col.pop.san.airline.domain.entity.response.FlightData;
-import com.col.pop.san.airline.domain.entity.response.FlightResponse;
-import com.col.pop.san.airline.domain.entity.response.PassengerResponse;
+import com.col.pop.san.airline.domain.entity.response.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,27 +15,17 @@ import java.util.List;
 public class AirlineController {
 
     private final Checkinservice checkinservice;
-
     @Autowired
     public AirlineController(Checkinservice checkinservice) {
         this.checkinservice = checkinservice;
     }
 
-    @GetMapping("/flights/{id}/atributesAll")
+    @GetMapping("/flights/{id}/passengers")
     public ResponseEntity<?> getAllatributosByFlightId(@PathVariable Integer id) {
-        List<PassengerResponse> passengersList = checkinservice.getPassengerAttributesByFlightId(id);
+        Integer airplaneId =  checkinservice.getAirplaneIdByFlightId(id);
+        List<SeatAvailable>  listSeatAvailable = checkinservice.getSeatAvailableByAirplaneId(airplaneId);
+        List<PassengerResponse> passengersList = checkinservice.getPassengerAttributesByFlightId(id, listSeatAvailable, airplaneId);
         FlightData response = checkinservice.getResponseFlight(id, passengersList);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-    @GetMapping("/flights/{id}/passengers")
-    public ResponseEntity<?> getFlightPassengers(@PathVariable Integer id) {
-        List<PassengerResponse> passengerAttributes  = checkinservice.getPassengerAttributesByFlightId(id);
-        FlightData flightData  = checkinservice.getResponseFlight(id, passengerAttributes);
-        FlightResponse flightResponse = checkinservice.generateFlightResponse(id, flightData);
-        return new ResponseEntity<>(flightResponse, HttpStatus.OK);
-    }
-
-
-
 }

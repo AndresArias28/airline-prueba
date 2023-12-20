@@ -1,17 +1,15 @@
 package com.col.pop.san.airline.application.service;
 
-import com.col.pop.san.airline.domain.entity.Passenger;
 import com.col.pop.san.airline.domain.entity.response.*;
-
 import java.util.List;
 
 public interface Checkinservice {
 
-    List<PassengerResponse> getPassengerAttributesByFlightId(Integer id);
-
+    List<PassengerResponse> getPassengerAttributesByFlightId(Integer flightId, List<SeatAvailable> seatAvaliables, Integer airplaneId);
 
     FlightData getResponseFlight(Integer id, List<PassengerResponse> passengersList);
 
+    Integer getAirplaneIdByFlightId(Integer id);
 
-    FlightResponse generateFlightResponse(Integer id, FlightData flightData);
+    List<SeatAvailable> getSeatAvailableByAirplaneId(Integer airplaneId);
 }

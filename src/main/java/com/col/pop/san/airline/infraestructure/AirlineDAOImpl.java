@@ -1,11 +1,8 @@
 package com.col.pop.san.airline.infraestructure;
 
-import com.col.pop.san.airline.domain.entity.*;
 import com.col.pop.san.airline.domain.entity.response.*;
 import com.col.pop.san.airline.domain.exceptions.FlightNotFoundException;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -49,7 +46,7 @@ public class AirlineDAOImpl implements AirlineDAO {
                 "JOIN airplane ai ON f.airplane_id = ai.airplane_id " +
                 "WHERE f.flight_id = ? ";
         Object[] params = { data };
-        List<FlightData> results =  jdbcTemplate.query(sql, params, new TuEntidadRowMapper(passengersList));
+        List<FlightData> results =  jdbcTemplate.query(sql, params, new FlightResponseRowMapper(passengersList));
         if (!results.isEmpty()) {
             return results.get(0);  // Retorna el primer resultado
         } else {
@@ -58,29 +55,31 @@ public class AirlineDAOImpl implements AirlineDAO {
     }
 
     @Override
-    public List<Seat> getListOfSeatbyFlightId(Integer id) {
-
-        return null;
+    public List<SeatAvailable> getSeatAvailableByAirplaneId(Integer airplaneId) {
+        String sql = "SELECT * FROM seat WHERE airplane_id = ?";
+        Object[] params = { airplaneId };
+        List<SeatAvailable> results =  jdbcTemplate.query(sql, params, new SeatAvaliableRowMapper());
+        if (!results.isEmpty()) {
+            return  results;  // Retorna el primer resultado
+        } else {
+            throw new FlightNotFoundException(airplaneId);
+        }
     }
 
+    @Override
+    public Integer getAirplaneIdByFlightId(Integer id) {
+        String sql = "SELECT s.airplane_id " +
+                "FROM seat s " +
+                "JOIN boarding_pass bp ON s.seat_id = bp.seat_id " +
+                "JOIN flight f ON bp.flight_id = f.flight_id " +
+                "WHERE f.flight_id = ? ";
+        Object[] params = { id };
+        List<Integer> results = jdbcTemplate.queryForList(sql, Integer.class, params);
 
-
-
-   /*    public List<RespuestaPrueba> getPassengers(Integer id) {
-        TypedQuery<RespuestaPrueba> query =  entityManager
-                .createQuery("SELECT NEW com.col.pop.san.airline.domain.entity.response.RespuestaPrueba(p.passengerId, p.dni, bp.boardingPassId) FROM Passenger p "+
-                        "JOIN p.boardingsPasses bp " +
-                        "JOIN bp.flight f " +
-                        "WHERE f.flightId  = :data", RespuestaPrueba.class
-                );
-        query.setParameter("data", id);
-        return query.getResultList();
-        //OTRA FORMA LARGA PARA LA CONSULTA JPA
-             .createQuery("SELECT p.passengerId, p.dni, bp.boardingPassId FROM Passenger p "+
-                        "JOIN BoardingPass bp ON p.passengerId = bp.passenger.passengerId " +
-                        "JOIN Flight f ON bp.flight.flightId = f.flightId " +
-                        "WHERE f.flightId  = :data", Passenger.class
-                );
-    }*/
-
+        if (!results.isEmpty()) {
+            return results.get(0);  // Retorna el primer resultado
+        } else {
+            throw new FlightNotFoundException(id);
+        }
+    }
 }
