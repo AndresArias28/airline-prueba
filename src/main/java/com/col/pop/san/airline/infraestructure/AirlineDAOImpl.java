@@ -5,6 +5,7 @@ import com.col.pop.san.airline.domain.exceptions.FlightNotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -45,24 +46,20 @@ public class AirlineDAOImpl implements AirlineDAO {
                 "FROM flight f " +
                 "JOIN airplane ai ON f.airplane_id = ai.airplane_id " +
                 "WHERE f.flight_id = ? ";
-        Object[] params = { data };
-        List<FlightData> results =  jdbcTemplate.query(sql, params, new FlightResponseRowMapper(passengersList));
-        if (!results.isEmpty()) {
-            return results.get(0);  // Retorna el primer resultado
-        } else {
-            throw new FlightNotFoundException(data);
-        }
+        return jdbcTemplate.queryForObject(sql, new Object[]{data}, new FlightResponseRowMapper(passengersList));
+
     }
 
     @Override
     public List<SeatAvailable> getSeatAvailableByAirplaneId(Integer airplaneId) {
+
         String sql = "SELECT * FROM seat WHERE airplane_id = ?";
-        Object[] params = { airplaneId };
-        List<SeatAvailable> results =  jdbcTemplate.query(sql, params, new SeatAvaliableRowMapper());
-        if (!results.isEmpty()) {
-            return  results;  // Retorna el primer resultado
-        } else {
+        List<SeatAvailable> results = jdbcTemplate.query(sql, new Object[]{airplaneId}, new BeanPropertyRowMapper<>(SeatAvailable.class));
+
+        if (results == null || results.isEmpty()) {
             throw new FlightNotFoundException(airplaneId);
+        } else {
+            return results;
         }
     }
 
